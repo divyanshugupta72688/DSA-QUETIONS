@@ -1,0 +1,14 @@
+public class MovesZero{
+    static void Moves(int[]nums){
+        int left = 0;    
+        for(int right = 0;right<nums.length;right++){
+            if(nums[right]!=0){
+                // SWAP
+                int temp = nums[right];
+                nums[right] = nums[left];
+                nums[left] = temp;
+                left++;
+            }
+        }
+    }
+}
