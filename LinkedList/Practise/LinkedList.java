@@ -358,6 +358,19 @@ public Node Duplicate(Node head){
     return head;
 }
 
+
+
+// intersectionn of two linked list 
+
+public Node InterSection(Node headA,Node headB){
+    Node t1   = headA;
+    Node t2 = headB;
+    while (t1!=t2) {
+        t1 = (t1==null)?headB:t1.next;
+         t2 = (t2==null)?headA:t2.next;
+    }
+    return t1;
+}
 // Main class
  public static void main(String[] args) {
         LinkedList ll = new LinkedList();
