@@ -54,7 +54,19 @@ class practise{
         return (num & num+1)==0;
     }
 
-    // to check given array contains single number or not (136)
+    // Reverse BIt
+
+    public int Reverse(int n){
+        int ans = 0;
+        for(int i = 0;i<32;i++){
+            ans = ans<<1;
+            ans = ans|(n&1);
+            n = n>>1;
+        }
+        return ans;
+    }
+
+
 
 
 
