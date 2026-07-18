@@ -96,7 +96,7 @@ public class Practise {
         return ans;
     }
 
-    // to calculate height of binary tree
+    // to calculate maxheight of binary tree
 
     public int height(Node root) {
         if (root == null) {
@@ -110,7 +110,7 @@ public class Practise {
     }
 
 
-    // minimum of binary tree
+    // minimumheight of binary tree
 
     public int Minimum(Node root){
         if (root==null) {
@@ -127,9 +127,63 @@ public class Practise {
     }
 
 
-//
+// count of Nodes
+
+public int Count(Node root){
+    if (root==null) {
+        return 0;
+    }
+    int lc = Count(root.left);
+        int rc = Count(root.right);
+        int totalCount   = lc+rc+1;
+        return totalCount;
+
+}
+
+// sum of  nodes
+
+public int Sum(Node root){
+    if (root==null) {
+        return 0;
+    }
+    int leftsum = Sum(root.left);
+    int rightsum = Sum(root.right);
+    int totalsum = leftsum+rightsum+1;
+    return totalsum;
+}
+
+// zigzag traversal
 
 
+public List<List<Integer>>ZigZag(Node root){
+    List<List<Integer>>ans = new ArrayList<>();
+    if (root==null) {
+        return ans;
+    }
+    Queue<Node>q = new LinkedList<>();
+    q.add(root);
+    int level = 0;
+    while (!q.isEmpty()) {
+        int size = q.size();
+        //sublist 
+        List<Integer>sublist = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            Node currval = q.remove();
+            sublist.add(currval.data);
+            if (currval.left!=null) {
+                q.add(currval.left);
+            }if (currval.right!=null) {
+                q.add(currval.right);
+            }
+        }
+        if (level % 2 ==1) {
+            Collections.reverse(sublist);
+        }
+        ans.add(sublist);
+        level++;
+    }
+    return ans;
+}
 
 
 
