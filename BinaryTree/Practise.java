@@ -187,162 +187,36 @@ public List<List<Integer>>ZigZag(Node root){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public static void main(String[] args) {
+// diameter of binary tree
+
+ static class Info {
+    int dia;
+    int ht;
+
+    public Info(int dia, int ht) {
+        this.dia = dia;
+        this.ht = ht;
+    }
+}
+
+public Info diameter(Node root) {
+    if (root == null) {
+        return new Info(0, 0);
+    }
+
+    Info leftInfo = diameter(root.left);
+    Info rightInfo = diameter(root.right);
+
+    int height = Math.max(leftInfo.ht, rightInfo.ht) + 1;
+
+    int diameter = Math.max(
+            Math.max(leftInfo.dia, rightInfo.dia),
+            leftInfo.ht + rightInfo.ht + 1
+    );
+
+    return new Info(diameter, height);
+}
+public static void main(String[] args) {
 
         int[] arr = {
                 1, 2, 4, -1, -1, 5, -1, -1,
