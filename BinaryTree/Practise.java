@@ -216,8 +216,51 @@ public Info diameter(Node root) {
 
     return new Info(diameter, height);
 }
+
+
+// subtree exists in the tree
+
+public boolean isIdentical(Node root,Node subtree){
+    if (root==null && subtree==null) {
+        return true;
+    }else if (root==null || subtree==null) {
+        return false;
+    }
+     if (!isIdentical(root.left, subtree)) {
+        return false;
+    }
+    if (!isIdentical(root.right, subtree)) {
+        return false;
+    }
+    return true;
+}
+
+
+
+
+public boolean isSubtree(Node root,Node subtree){
+    if (root==null) {
+        return false;
+    }
+    if (root.data==subtree.data) {
+        if (isIdentical(root,subtree)) {
+            return true;
+        }
+    }
+    return isSubtree(root.left, subtree) || isSubtree(root.right, subtree);
+}
+
+
+
+
 public static void main(String[] args) {
 
+
+
+    // SubTree Of Another tree
+
+
+    
         int[] arr = {
                 1, 2, 4, -1, -1, 5, -1, -1,
                 3, -1, 6, -1, -1
@@ -227,6 +270,6 @@ public static void main(String[] args) {
         // binrarytree bt = new binarytree()
         // Node root = bt.buildtree(nodes)
 
-        Node root = buildTree(arr);
+    
     }
 }
