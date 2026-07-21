@@ -226,13 +226,11 @@ public boolean isIdentical(Node root,Node subtree){
     }else if (root==null || subtree==null) {
         return false;
     }
-     if (!isIdentical(root.left, subtree)) {
+     
+    if (root.data != subtree.data) {
         return false;
     }
-    if (!isIdentical(root.right, subtree)) {
-        return false;
-    }
-    return true;
+    return isIdentical(root.left, subtree.left) && isIdentical(root.right, subtree.right); 
 }
 
 
@@ -251,7 +249,44 @@ public boolean isSubtree(Node root,Node subtree){
 }
 
 
+// TOP VIEW OF BINARY TREE
 
+class Pair{
+    Node node;
+    int hd;
+    Pair(Node node,int hd){
+        this.node = node;
+        this.hd = hd;
+    }
+}
+
+public ArrayList<Integer> topView(Node root){
+    ArrayList<Integer> ans = new ArrayList<>();
+    if (root == null) {
+        return ans;
+    }
+    TreeMap<Integer,Integer> map = new TreeMap<>();
+    Queue<Pair>q = new LinkedList<>();
+    q.add(new Pair(root, 0));
+    while (!q.isEmpty()) {
+        Pair curr = q.remove();
+        Node node  = curr.node;
+        int hd = curr.hd;
+        if (!map.containsKey(hd)) {
+            map.put(hd, node.data);
+        }
+        if (node.left!=null) {
+            q.add(new Pair(node.left, hd-1));
+        }
+        if (node.right!=null) {
+            q.add(new Pair(node.right,hd+1));
+        }
+    }
+    for (int  value : map.values()) {
+        ans.add(value);
+    }
+    return ans;
+}
 
 public static void main(String[] args) {
 
