@@ -39,7 +39,22 @@ class practise {
         inorder(root.right);
     }
     
-    
+    // search in BST
+
+
+    public boolean Search(Node root,int key){
+        if (root==null) {
+            return false;
+        }
+        if (root.data==key) {
+            return true;
+        }else if (root.data>key) {
+           return Search(root.left, key);
+        }else{
+           return Search(root.right, key);
+        }
+        
+    }
     
     
     public static void main(String[] args) {
