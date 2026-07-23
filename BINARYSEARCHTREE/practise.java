@@ -56,7 +56,61 @@ class practise {
         
     }
     
+    //Convert Sorted Array to Binary Search Tree
+
+
+    public Node helper(int[]nums,int s,int e){
+        
+        if (s>e) {
+            return null;
+        }
+
+        int mid = s+(e-s)/2;
+        Node root = new Node(nums[mid]);
+        
+        root.left = helper(nums, s, mid-1);
+        root.right = helper(nums, mid+1, e);
+        return root;
+    }
+    public Node Sorted(int[]nums){
+        return helper(nums,0,nums.length-1);
+    }
     
+
+    // delete node from BST
+
+    public static Node delete(Node root,int val){
+
+        if (root==null) {
+            return null;
+        }
+        if (root.data<val) {
+          root.right=  delete(root.right, val);
+        }else if (root.data>val) {
+            root.left = delete(root.left, val);
+        }else{
+            // pahal case leaf node hai
+            if (root.left==null && root.right==null) {
+                return null;
+            }else if (root.left==null) { // dusra case hai jisme 1 node hogi ya to right side hogi ya left side hogi
+                return root.right;
+            }else if (root.right==null) {
+               return root.left ;
+            }
+            // teesre case middle me delete karna ho to
+            Node inorderSuccessor = findinordersuccessor(root.right);
+            root.data =  inorderSuccessor.data; 
+            root.right = delete(root.right, inorderSuccessor.data);
+        }
+        return root;
+    }
+
+    public static Node findinordersuccessor(Node root){
+        while (root.left!=null) {
+            root = root.left;
+        }
+        return root;
+    }
     public static void main(String[] args) {
         int[] values = {5,1,3,4,2,7};
         Node root = null;
