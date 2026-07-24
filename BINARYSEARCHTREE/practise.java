@@ -111,6 +111,28 @@ class practise {
         }
         return root;
     }
+
+
+
+
+    // PRINT IN RANGE
+
+    public void PrintInRange(Node root,int k1,int k2){
+            if (root==null) {
+                return;
+            }
+        if (root.data>=k1 && root.data<=k2) {
+            PrintInRange(root.left, k1, k2);
+            System.out.print(root.data);
+            PrintInRange(root.right, k1, k2);
+        }else if (root.data<k1) {
+            PrintInRange(root.right, k1, k2);
+        }else{
+            PrintInRange(root.left, k1, k2);
+        }
+    }
+
+
     public static void main(String[] args) {
         int[] values = {5,1,3,4,2,7};
         Node root = null;
