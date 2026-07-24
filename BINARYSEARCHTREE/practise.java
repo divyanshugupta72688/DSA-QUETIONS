@@ -1,5 +1,6 @@
 package BINARYSEARCHTREE;
 
+import java.util.*;
 
 class practise {
 
@@ -131,6 +132,44 @@ class practise {
             PrintInRange(root.left, k1, k2);
         }
     }
+
+    // Range Sum of BST(938)
+
+    public int RangeSumOfBST(Node root, int low, int high){
+        if(root==null){
+            return 0;
+        }
+
+        if (root.data>=low && high>=root.data) {
+            return (root.data+RangeSumOfBST(root.left, low, high)+RangeSumOfBST(root.right, low, high));
+        }else if (root.data<low) {
+            return RangeSumOfBST(root.right, low, high);
+        }else{
+            return RangeSumOfBST(root.left, low, high);
+        }
+    }
+
+    // .Validate BinarySearchTree
+
+  ArrayList<Integer>ans = new ArrayList<>();
+    public void inorderfind(Node root){
+      
+        if (root==null) {
+            return;
+        }
+        inorder(root.left);
+        ans.add(root.data);
+        inorder(root.right);
+    }
+public boolean validBST(Node root){
+    inorderfind(root);
+    for(int i = 1;i<ans.size();i++){
+        if (ans.get(i)<=ans.get(i-1)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 
     public static void main(String[] args) {
