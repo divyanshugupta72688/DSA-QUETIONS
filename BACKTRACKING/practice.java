@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.*;
 
 class practice{
 
@@ -122,6 +121,73 @@ public List<String> Problem(String digits) {
 
     return ans;
 }
+
+// N QUEENS PROBLEM
+
+public boolean iSSafe(char[][] board, int row, int col) {
+
+        // Vertical Up
+        for (int i = row - 1; i >= 0; i--) {
+            if (board[i][col] == 'Q') {
+                return false;
+            }
+        }
+
+        // Diagonal Left Up
+        for (int i = row - 1, j = col - 1;
+             i >= 0 && j >= 0;
+             i--, j--) {
+
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+
+        // Diagonal Right Up
+        for (int i = row - 1, j = col + 1;
+             i >= 0 && j < board.length;
+             i--, j++) {
+
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+public void SOLVE( char[][]board,int row,List<List<String>>ans){
+    if (row==board.length) {
+        List<String>temp = new ArrayList<>();
+        for(int i = 0;i<board.length;i++){
+            temp.add(new String(board[i]));
+        }
+        ans.add(temp);
+        return ;
+    }
+
+    for(int coln = 0;coln<board.length;coln++){
+        if (iSSafe(board,row,coln)) {
+            board[row][coln] = 'Q';
+            SOLVE( board, row + 1, ans);
+            board[row][coln] = '.';
+        }
+    }
+}
+public List<List<String>>Nqueens(int n){
+    char[][]board = new char[n][n];
+   for( int i = 0;i<board.length;i++){
+    for(int j = 0;j<board.length;j++){
+        board[i][j] = '.';
+    }
+   }
+   int row = 0;
+   List<List<String>>ans = new ArrayList<>();
+   SOLVE(board,row,ans);
+   return ans;
+}
+
+
 
 
 }
