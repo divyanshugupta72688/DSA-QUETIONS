@@ -1,111 +1,129 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class practice{
 
-    // n queens problem on leetcode no.51
 
+    // rate in maze problem 
 
-        // ye function keval ye check karta hai ki queen uper vale coln per baith payegi kai nahi
-    public boolean isSafe(char board[][],int row, int coln){
-        
-        // ye uper row check karta hai kahi queen upr to nahi baithi hai
-
-
-        for(int i = row-1;i>=0;i--){ 
-            if (board[i][coln]=='Q') {
-                return false;
-            }
+    public boolean isSafe(int[][]maze,int newsrcx,int newsrcy,int n,boolean[][]visited){
+        if (newsrcx<0 || newsrcx>=n||newsrcy<0 ||newsrcy>=n) {
+            return false;
         }
-
-
-         // ye loop diagonal left up check krta hai 
-
-
-        for(int i = row-1,j=coln-1;i>=0 &&j>=0;i--,j--){
-            if (board[i][j]=='Q') {
-                return false;
-            }
+        if (maze[newsrcx][newsrcy]==0) {
+            return false;
         }
-
-        // ye diagonal right up check karta hai aur ye dekhta hai ki upr vale row aur badhte hue coln me kahi queen to nahi baithi hai
-         for(int i = row-1,j=coln+1;i>=0 &&j<board.length;i--,j++){ 
-            if (board[i][j]=='Q') {
-                return false;
-            }
+        if (visited[newsrcx][newsrcy]) {
+            return false;
         }
-            return true;
-    }
-    public  void solve(char board[][],int row,  List<List<String>> ans){
-        
-        
-        // base condition 
-
-        if (row==board.length) {
-            List<String>temp = new ArrayList<>();
-            for (int i = 0; i < board.length; i++) {
-                temp.add(new String(board[i]));
-            }
-            ans.add(temp);
-            return ;
-        }
-
-            
-        // ye condition dekhti hai ki aage aane vale usi row me coln me kahi queen baithi to nai hai
-
-        for (int coln = 0; coln < board.length; coln++) {
-            
-            // ye condition check karta hai queen coln me baith sakti hai ki nahi
-            if (isSafe(board,row,coln)) {
-                board[row][coln] = 'Q';
-
-                // recursion
-                solve(board, row+1, ans);
-
-                // backtracking
-
-
-                board[row][coln] = '.';
-            }
-        }
+        return true;
     }
 
-    public List<List<String>> SolveQueen(int n){
-        List<List<String>> ans = new ArrayList<>();
+   public void solve(int[][] maze,
+                  int srcx,
+                  int srcy,
+                  int destx,
+                  int desty,
+                  ArrayList<String> ans,
+                  boolean[][] visited,
+                  String path){
 
-    //    board bnate hai jitni queen hogi utne by utne ka board bnega
+    if(srcx==destx && srcy==desty){
+        ans.add(path);
+        return;
+    }
 
-        char[][]board = new char[n][n];
+    int n = maze.length;
 
+    visited[srcx][srcy]=true;
 
-        // row no. 0 se start karte hai yaani pahle row se 
-        int row = 0; 
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                board[i][j]  = '.';
-            }
+    // Up
+    if(isSafe(maze,srcx-1,srcy,n,visited)){
+        solve(maze,srcx-1,srcy,destx,desty,ans,visited,path+"U");
+    }
+
+    // Down
+    if(isSafe(maze,srcx+1,srcy,n,visited)){
+        solve(maze,srcx+1,srcy,destx,desty,ans,visited,path+"D");
+    }
+
+    // Left
+    if(isSafe(maze,srcx,srcy-1,n,visited)){
+        solve(maze,srcx,srcy-1,destx,desty,ans,visited,path+"L");
+    }
+
+    // Right
+    if(isSafe(maze,srcx,srcy+1,n,visited)){
+        solve(maze,srcx,srcy+1,destx,desty,ans,visited,path+"R");
+    }
+
+    // Backtracking
+    visited[srcx][srcy]=false;
+}
+
+    public ArrayList<String>Rate(int[][]maze){
+        ArrayList<String>ans = new ArrayList<>();
+        if (maze[0][0]==0) {
+            return ans;
         }
-        solve(board,row,ans);
+        int n = maze.length;
+        boolean[][]visited = new boolean[n][n];
+
+        solve(maze,0,0,n-1,n-1,ans,visited,"");
+        Collections.sort(ans);
         return ans;
     }
 
-
-    // grid ways quetion
-
-    public int CountWays(int i, int j ,int n, int m){
+// PHONE KEYPAID PROBLEM
 
 
-        if (i==n-1 && j==m-1) {
-            return 1;
-        }
+public void SOlve(String digits,
+                  int index,
+                  StringBuilder sb,
+                  List<String> ans,
+                  String[] mapped) {
 
-        if (i==n || j ==m) {
-            return 0;
-        }
-        int w1 = CountWays(i+1, j, n, m);
-        int w2 = CountWays(i, j+1, n, m);
-        return w1+w2;
+    // Base Case
+    if (index == digits.length()) {
+        ans.add(sb.toString());
+        return;
     }
+
+    int value = digits.charAt(index) - '0';
+    String mappingString = mapped[value];
+
+    for (int i = 0; i < mappingString.length(); i++) {
+
+        sb.append(mappingString.charAt(i));
+
+        SOlve(digits, index + 1, sb, ans, mapped);
+
+        sb.deleteCharAt(sb.length() - 1);
+    }
+}
+
+public List<String> Problem(String digits) {
+
+    List<String> ans = new ArrayList<>();
+    StringBuilder sb = new StringBuilder();
+
+    String[] mapped = {
+        "", "", "abc", "def",
+        "ghi", "jkl", "mno",
+        "pqrs", "tuv", "wxyz"
+    };
+
+    if (digits.length() == 0) {
+        return ans;
+    }
+
+    SOlve(digits, 0, sb, ans, mapped);
+
+    return ans;
+}
+
+
 }
     
 

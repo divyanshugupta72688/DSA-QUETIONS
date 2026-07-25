@@ -90,7 +90,7 @@ class practise {
         }else if (root.data>val) {
             root.left = delete(root.left, val);
         }else{
-            // pahal case leaf node hai
+            // pahala case leaf node hai
             if (root.left==null && root.right==null) {
                 return null;
             }else if (root.left==null) { // dusra case hai jisme 1 node hogi ya to right side hogi ya left side hogi
@@ -98,7 +98,7 @@ class practise {
             }else if (root.right==null) {
                return root.left ;
             }
-            // teesre case middle me delete karna ho to
+            // teesre case middle me delete karna ho to usme inorder successor nikalte hai !
             Node inorderSuccessor = findinordersuccessor(root.right);
             root.data =  inorderSuccessor.data; 
             root.right = delete(root.right, inorderSuccessor.data);
@@ -171,7 +171,19 @@ public boolean validBST(Node root){
     return true;
 }
 
+// mirror of BST
 
+public Node Mirror(Node root){
+    if (root==null) {
+        return null;
+    }
+    Node leftMirror = Mirror(root.left);
+    Node rightMirror = Mirror(root.right);
+
+    root.left = rightMirror;
+    root.right = leftMirror;
+    return root;
+}
     public static void main(String[] args) {
         int[] values = {5,1,3,4,2,7};
         Node root = null;
