@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class Classroom {
+
+    static ArrayList<Integer> arr = new ArrayList<>();
+
+    // add element in heap
+
+    public static void add(int data) {
+        arr.add(data);
+
+        int x = arr.size() - 1;// child index jaha per element insert hoga!
+        int par = (x - 1) / 2;// parent index
+
+        while (x > 0 && arr.get(x) < arr.get(par)) {
+
+            int temp = arr.get(x);
+            arr.set(x, arr.get(par));
+            arr.set(par, temp);
+
+            x = par;
+            par = (x - 1) / 2;
+        }
+    }
+
+
+    // min element or max element nikalana  heap se   
+    public static int peek() {
+    return arr.get(0);
+}
+    public static void main(String[] args) {
+
+        add(3);
+        add(4);
+        add(2);
+        add(5);
+
+        System.out.println(arr);
+
+        add(1);
+
+        System.out.println(arr);
+    }
+}
