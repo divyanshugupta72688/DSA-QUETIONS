@@ -1,5 +1,8 @@
 import java.util.*;
 
+
+// isme saare uwtion implement kiye gaye hai jo maine leetcode aur geeks pe solve kiye hai
+
 class NearestKpoints {
 
     // nearest point to origin
