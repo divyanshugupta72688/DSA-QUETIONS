@@ -69,4 +69,23 @@ class NearestKpoints {
             System.out.println(ans[i][0]+" "+ans[i][1]);
         }
     }
+
+
+
+    // CONNECTING N ROPES
+
+    public int ConnectingNRopes(int[]ropes){
+        PriorityQueue<Integer>pq = new PriorityQueue<>();
+        for(int i = 0;i<ropes.length;i++){
+            pq.add(ropes[i]);
+        }
+        int cost = 0;
+        while (pq.size()>1) {
+            int min1 = pq.remove();
+            int min2 = pq.remove();
+            cost = cost+ min1+min2;
+            pq.add(min1+min2);
+        }
+        return cost;
+    }
 }
