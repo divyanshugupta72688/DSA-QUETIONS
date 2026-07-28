@@ -112,8 +112,29 @@ class NearestKpoints {
    
    
    
+   // SLIDING WINDOW MAXIMUM 
+
+   // BRUTE FORCE APPROACH
+
+   public int[] Maximum(int[]nums,int k){
+        int n = nums.length;
+        int[]ans = new int[n-k+1];
+        for(int i = 0;i<=n-k;i++){
+            int max = nums[i];
+            for(int j = i;j<i+k;j++){
+                if (nums[j]>max) {
+                    max = nums[j];
+                }
+            }
+            ans[i] = max;
+        }
+        return ans;
+   }
+    
    
-    public static void main(String[] args) {
+   
+   
+   public static void main(String[] args) {
 
         int[][] points = {
                 {3,3},
