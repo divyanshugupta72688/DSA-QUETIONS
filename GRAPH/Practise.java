@@ -135,6 +135,34 @@ public int Component(int V,ArrayList<ArrayList<Integer>>graph){
     }
  }
 
+// cycle detection using DFS for undirected graph
+
+public boolean cycle(int V,ArrayList<ArrayList<Integer>>adj){
+    boolean[]visited = new boolean[V];
+    for(int i = 0;i<V;i++){
+        if (!visited[i]) {
+            if (helper2(i,-1,visited,adj)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+public boolean helper2(int start,int parent,boolean[]visited,ArrayList<ArrayList<Integer>>adj){
+
+    visited[start] = true;
+    for(int neighbour : adj.get(start)){
+        if (!visited[neighbour]) {
+            if (helper2(neighbour, start, visited, adj)) {
+                return true;
+            }
+        }else if (neighbour!=parent) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
