@@ -237,7 +237,38 @@ public class Revesion {
         }
     }
 
+// topo sort using BFS KNOWN AN KAHN'S ALGORITHM
 
+class TopoSortUsingBfs{
 
-    
+public ArrayList<Integer>Sorting(int V,ArrayList<ArrayList<Integer>> adj){
+    ArrayList<Integer>ans = new ArrayList<>();
+    int[]indegree = new int[V];
+    for(int i = 0;i<V;i++){
+        for(int neighbour : adj.get(i)){
+            indegree[neighbour]++;
+        }
+    }
+    Queue<Integer>q = new LinkedList<>();
+    for(int i = 0;i<V;i++){
+        if (indegree[i]==0) {
+            q.add(i);
+        }
+    }
+
+    while (!q.isEmpty()) {
+        int node = q.remove();
+        ans.add(node);
+        for(int neighbour : adj.get(node)){
+            indegree[neighbour]--;
+            if (indegree[neighbour]==0) {
+                q.add(neighbour);
+            }
+        }
+    }
+    return ans;
+}
+
+}
+
 }
