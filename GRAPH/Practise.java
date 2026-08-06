@@ -199,4 +199,29 @@ public class Practise {
         }
         return true;
     }
+
+
+    public ArrayList<Integer>TopoSort(int V,ArrayList<ArrayList<Integer>>adj){
+       Stack<Integer>s = new Stack<>();
+        boolean[]visited = new boolean[V];
+        for(int i = 0;i<V;i++){
+            if (!visited[i]) {
+                TopoSortUtil(i, adj,visited,s);
+            }
+        }
+        ArrayList<Integer>ans = new ArrayList<>();
+        while (!s.isEmpty()) {
+            ans.add(s.pop());
+        }
+        return ans;
+    }
+    public void TopoSortUtil(int start,ArrayList<ArrayList<Integer>>adj,boolean[]visited,Stack<Integer>s){
+        visited[start] = true;
+        for(int neighbour:adj.get(start)){
+            if (!visited[neighbour]) {
+                TopoSortUtil(neighbour, adj, visited, s);
+            }
+        }
+        s.push(start);
+    }
 }
