@@ -78,9 +78,8 @@ public class Practise {
         }
     }
 
-    
     // TO CHECK PATH IS EXISTS FROM SOURCE TO DESTINATION !
-    
+
     public boolean PathExistsOrNot(int n, int[][] edges, int source, int dest) {
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
         boolean[] vis = new boolean[n];
@@ -94,76 +93,110 @@ public class Practise {
             adj.get(v).add(u);
         }
 
-       return DFS(adj,vis,source,dest);
+        return DFS(adj, vis, source, dest);
     }
 
-    public boolean DFS( ArrayList<ArrayList<Integer>> adj,boolean[] vis, int start, int dest){
-        if (start==dest) {
+    public boolean DFS(ArrayList<ArrayList<Integer>> adj, boolean[] vis, int start, int dest) {
+        if (start == dest) {
             return true;
         }
         vis[start] = true;
-        for(int neighbour : adj.get(start)){
+        for (int neighbour : adj.get(start)) {
             if (!vis[neighbour]) {
                 if (DFS(adj, vis, neighbour, dest)) {
                     return true;
                 }
             }
         }
-         return false;
+        return false;
     }
 
+    // COUNT THE COMPONENT OF GRAPH
 
-// COUNT THE COMPONENT OF GRAPH
-
-public int Component(int V,ArrayList<ArrayList<Integer>>graph){
-     boolean[] vis = new boolean[V];
-     int count = 0;
-     for(int i = 0;i<V;i++){
-        if (!vis[i]) {
-            helper(i,graph,vis);
-            count++;
+    public int Component(int V, ArrayList<ArrayList<Integer>> graph) {
+        boolean[] vis = new boolean[V];
+        int count = 0;
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                helper(i, graph, vis);
+                count++;
+            }
         }
-     }
-     return count;
-}
- public void helper(int start,ArrayList<ArrayList<Integer>>graph,boolean[] vis){
-    vis[start] = true;
-    for(int neighbour : graph.get(start)){
-        if (!vis[neighbour]) {
-            helper(neighbour, graph, vis);
-        }
+        return count;
     }
- }
 
-// cycle detection using DFS for undirected graph
-
-public boolean cycle(int V,ArrayList<ArrayList<Integer>>adj){
-    boolean[]visited = new boolean[V];
-    for(int i = 0;i<V;i++){
-        if (!visited[i]) {
-            if (helper2(i,-1,visited,adj)) {
-                return true;
+    public void helper(int start, ArrayList<ArrayList<Integer>> graph, boolean[] vis) {
+        vis[start] = true;
+        for (int neighbour : graph.get(start)) {
+            if (!vis[neighbour]) {
+                helper(neighbour, graph, vis);
             }
         }
     }
-    return false;
-}
 
-public boolean helper2(int start,int parent,boolean[]visited,ArrayList<ArrayList<Integer>>adj){
+    // cycle detection using DFS for undirected graph
 
-    visited[start] = true;
-    for(int neighbour : adj.get(start)){
-        if (!visited[neighbour]) {
-            if (helper2(neighbour, start, visited, adj)) {
+    public boolean cycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] visited = new boolean[V];
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                if (helper2(i, -1, visited, adj)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean helper2(int start, int parent, boolean[] visited, ArrayList<ArrayList<Integer>> adj) {
+
+        visited[start] = true;
+        for (int neighbour : adj.get(start)) {
+            if (!visited[neighbour]) {
+                if (helper2(neighbour, start, visited, adj)) {
+                    return true;
+                }
+            } else if (neighbour != parent) {
                 return true;
             }
-        }else if (neighbour!=parent) {
-            return true;
         }
+        return false;
     }
-    return false;
-}
 
+    // CHECK GRAPH IS BIPRATE OR NOT
 
+    public boolean IsBiptrate(int[][] graph) {
+        int n = graph.length;
+        int[] color = new int[n];
+        for (int i = 0; i < n; i++) {
+            color[i] = -1;
+        }
+        for (int i = 0; i < n; i++) {
+            if (color[i] == -1) {
+                if (!bfs(i, graph, color)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
+    public boolean bfs(int start, int[][] graph, int[] color) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        color[start] = 0;
+        while (!q.isEmpty()) {
+            int node = q.remove();
+            for (int neighbour : graph[node]) {
+                if (color[neighbour] == -1) {
+                    color[neighbour] = 1 - color[node];
+                    q.add(neighbour);
+                } else if (color[neighbour] == color[node]) {
+                    return false;
+                }
+            }
+
+        }
+        return true;
+    }
 }
