@@ -107,6 +107,29 @@ class Climbing{
     }
 }
 
+// HOUSE ROBBER(198)
 
+class Robber{
+    public int HouseRobber(int nums[]){
+        int n = nums.length;
+        int index = 0;
+        int[]dp = new int[n+1];
+        Arrays.fill(dp, -1);
+        int ans = helper(nums,index,dp);
+        return ans;
+    }
+    public int helper(int[]nums,int index,int[]dp){
+        if (index>=nums.length) {
+            return 0;
+        }
+        if (dp[index]!=-1) {
+            return dp[index];
+        }
+        int includeans = nums[index]+helper(nums, index+2, dp);
+        int excludeans = 0+ helper(nums, index+1, dp);
+        dp[index] = Math.max(includeans, excludeans);
+        return dp[index];
+    }
+}
 
 }
