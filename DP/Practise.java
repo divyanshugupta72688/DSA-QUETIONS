@@ -54,10 +54,10 @@ public class Practise {
         }
 
         public int helper(int n, int[] dp) {
-            if (n <= 1) {
-                return 1;
+            if (n == 0) {
+                return 0;
             }
-            if (n == 2) {
+            if (n == 2 || n==1) {
                 return 1;
             }
             if (dp[n] != -1) {
@@ -141,6 +141,49 @@ public class Practise {
             int take = nums[start] + helper(nums, start + 2, end, dp);
             int skip = helper(nums, start + 1, end, dp);
             return dp[start] = Math.max(take, skip);
+        }
+    }
+
+    // FRIENDS PAIRING PROBLEM
+
+    class Pairing {
+        public int PairingFriend(int n) {
+            int[] dp = new int[n + 1];
+            Arrays.fill(dp, -1);
+            return helper(n, dp);
+        }
+
+        public int helper(int n, int[] dp) {
+            if (n <= 2) {
+                return n;
+            }
+            if (dp[n] != -1) {
+                return dp[n];
+            }
+            return dp[n] = (helper(n - 1, dp) + helper(n - 2, dp) * (n - 1));
+        }
+    }
+
+    // HOW MANY WAYS TO ARRANGE IN WRONG WAY FOR GIVEN N
+
+    class Way {
+        public int Deaarange(int n) {
+            int[] dp = new int[n + 1];
+            Arrays.fill(dp, -1);
+            return helper(n, dp);
+        }
+
+        public int helper(int n, int[] dp) {
+            if (n == 1) {
+                return 0;
+            }
+            if (n == 0) {
+                return 1;
+            }
+            if (dp[n] != -1) {
+                return dp[n];
+            }
+            return dp[n] = (n - 1) * (helper(n - 1, dp) + helper(n - 2, dp));
         }
     }
 
