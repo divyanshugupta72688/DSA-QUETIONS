@@ -57,7 +57,7 @@ public class Practise {
             if (n == 0) {
                 return 0;
             }
-            if (n == 2 || n==1) {
+            if (n == 2 || n == 1) {
                 return 1;
             }
             if (dp[n] != -1) {
@@ -187,4 +187,60 @@ public class Practise {
         }
     }
 
+    // UNIQUE PATH(62)
+
+    class Unique {
+        public int Path(int m, int n) {
+            int[][] dp = new int[m][n];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    dp[i][j] = -1;
+                }
+            }
+            return helper(0, 0, m, n, dp);
+        }
+
+        public int helper(int row, int coln, int m, int n, int[][] dp) {
+            if (row >= m || coln >= n) {
+                return 0;
+            }
+            if (row == m - 1 && coln == n - 1) {
+                return 1;
+            }
+            if (dp[row][coln] != -1) {
+                return dp[row][coln];
+            }
+            return dp[row][coln] = helper(row + 1, coln, m, n, dp) + helper(row, coln + 1, m, n, dp);
+        }
+    }
+
+    // MINIMUM PATH SUM(64)
+
+    class MinimumPathSum {
+        public int Problem(int[][] grid) {
+            int m = grid.length;
+            int n = grid[0].length;
+            int[][] dp = new int[m][n];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    dp[i][j] = -1;
+                }
+            }
+            return helper(0, 0, m, n, grid, dp);
+        }
+
+        public int helper(int row, int coln, int m, int n, int[][] grid, int[][] dp) {
+            if (row >= m || coln >= n) {
+                return Integer.MAX_VALUE;
+            }
+            if (row == m - 1 && coln == n - 1) {
+                return grid[row][coln];
+            }
+            if (dp[row][coln] != -1) {
+                return dp[row][coln];
+            }
+            return dp[row][coln] = grid[row][coln]
+                    + Math.min(helper(row + 1, coln, m, n, grid, dp), helper(row, coln + 1, m, n, grid, dp));
+        }
+    }
 }
