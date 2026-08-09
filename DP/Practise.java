@@ -243,4 +243,78 @@ public class Practise {
                     + Math.min(helper(row + 1, coln, m, n, grid, dp), helper(row, coln + 1, m, n, grid, dp));
         }
     }
+
+    // KNAPSACK PROBLEM
+
+    class Knapsack {
+        public int Problem(int w, int[] wt, int[] val) {
+            int n = wt.length;
+            int[][] dp = new int[n + 1][w + 1];
+            for (int i = 0; i <= n; i++) {
+                for (int j = 0; j <= w; j++) {
+                    dp[i][j] = -1;
+                }
+            }
+            return helper(w, wt, val, n, dp);
+        }
+
+        public int helper(int w, int[] wt, int[] val, int n, int[][] dp) {
+            if (n == 0 || w == 0) {
+                return 0;
+            }
+            if (dp[n][w] != -1) {
+                return dp[n][w];
+            }
+            if (wt[n - 1] <= w) {
+                // include karenge
+                int ans1 = val[n - 1] + helper(w - wt[n - 1], wt, val, n - 1, dp);
+                // exclude pattern
+
+                int ans2 = helper(w, wt, val, n - 1, dp);
+                return dp[n][w] = Math.max(ans1, ans2);
+            } else {
+                return dp[n][w] = helper(w, wt, val, n - 1, dp);
+
+            }
+        }
+    }
+
+    // SUBSET PROBLEM Based On Include and Exclude Pattern
+
+    class Subset {
+        public boolean Problem(int[] nums) {
+            int sum = 0;
+            int n = nums.length;
+            for (int i : nums) {
+                sum += i;
+
+            }
+            if (sum % 2 != 0) {
+                return false;
+            }
+            int target = sum / 2;
+            int[][] dp = new int[n][target + 1];
+            for (int i = 0; i < n; i++) {
+                Arrays.fill(dp[i], -1);
+            }
+            return helper(nums, 0, dp, target);
+        }
+
+        public boolean helper(int[] nums, int idx, int[][] dp, int target) {
+            if (target == 0) {
+                return true;
+            }
+            if (idx == nums.length || target < 0) {
+                return false;
+            }
+
+            if (dp[idx][target] != -1) {
+                return dp[idx][target] == 1;
+            }
+            boolean take = helper(nums, idx + 1, dp, target - nums[idx]);
+            boolean nottake = helper(nums, idx + 1, dp, target);
+            dp[idx][target] = (take || nottake) ? 1 : 0;
+            return take || nottake;
+        }
+    }
 }
