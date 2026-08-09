@@ -1,4 +1,4 @@
-
+import java.util.Arrays;
 
 public class ThirdLecture {
 
@@ -124,5 +124,31 @@ class Solution{
     }
 }
 
+// UNBOUDED KNAPSACK
 
+class Unbounded{
+    public int Problem(int[]val,int[]wt,int w){
+        int n = wt.length;
+        int[][]dp = new int[n+1][w+1];
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        return helper(val,wt,w,n,dp);
+    }
+    public int helper(int[]val,int[]wt,int w,int idx,int[][]dp){
+        if (idx==0 || w==0) {
+            return 0;
+        }
+        if (dp[idx][w]!=-1) {
+            return dp[idx][w];
+        }
+        if (wt[idx-1]<=w) {
+            int take = val[idx-1]+helper(val, wt, w-wt[idx-1], idx, dp);
+            int nottake = helper(val, wt, w, idx-1, dp);
+            return dp[idx][w] = Math.max(take, nottake);
+        }else{
+            return dp[idx][w] = helper(val, wt, w, idx-1, dp);
+        }
+    }
+}
 }
