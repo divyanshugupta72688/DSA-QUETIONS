@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class Fourth {
 
     // RECURSION SOLUTION OF KNAPSACK PROBLEM(0-1)
@@ -57,11 +60,74 @@ public class Fourth {
                 int ans2 = helper(w, val, wt, dp, n - 1);
                 return dp[n][w] = Math.max(ans1, ans2);
             } else {
-                return dp[n][w]=helper(w, val, wt, dp, n - 1);
+                return dp[n][w] = helper(w, val, wt, dp, n - 1);
             }
         }
     }
 
+    // SUBSET SUM(416) recursive problem
 
-    
+    class Subset {
+
+        public boolean Problem(int[] nums) {
+            int sum = 0;
+            for (int x : nums) {
+                sum += x;
+            }
+            if (sum % 2 != 0) {
+                return false;
+            }
+            int target = sum / 2;
+            return helper(nums, 0, target);
+        }
+
+        public boolean helper(int[] nums, int idx, int target) {
+            if (target == 0) {
+                return true;
+            }
+            if (idx == nums.length || target < 0) {
+                return false;
+            }
+            boolean take = helper(nums, idx + 1, target - nums[idx]);
+            boolean nottake = helper(nums, idx + 1, target);
+            return take || nottake;
+        }
+    }
+
+    // target sum parttioning (416)
+
+    class Target {
+        public boolean Problem(int[] nums) {
+            int n = nums.length;
+            int sum = 0;
+            for (int i : nums) {
+                sum += i;
+            }
+            if (sum % 2 != 0) {
+                return false;
+            }
+            int target = sum / 2;
+            int[][] dp = new int[n][target + 1];
+            for (int i = 0; i < n; i++) {
+                Arrays.fill(dp[i], -1);
+            }
+            return helper(nums, 0, target, dp);
+        }
+
+        public boolean helper(int[] nums, int idx, int target, int[][] dp) {
+            if (target == 0) {
+                return true;
+            }
+            if (idx == nums.length || target < 0) {
+                return false;
+            }
+            if (dp[idx][target] != -1) {
+                return dp[idx][target] == 1;
+            }
+            boolean take = helper(nums, idx + 1, target - nums[idx], dp);
+            boolean nottake = helper(nums, idx + 1, target, dp);
+            dp[idx][target] = (take || nottake) ? 1 : 0;
+            return take || nottake;
+        }
+    }
 }
