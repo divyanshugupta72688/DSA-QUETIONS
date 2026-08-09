@@ -244,7 +244,8 @@ public class Practise {
         }
     }
 
-    // KNAPSACK PROBLEM
+    // KNAPSACK PROBLEM AUR UNBOUNDED KNAPSACK PROBLEM ME SIRF ITNA DIFFERNCE HOTA
+    // HAI KI HUM USE BAAR BAAR LE SAKTE HAI ANS1 LINE IDX-1 NAHI HOGA
 
     class Knapsack {
         public int Problem(int w, int[] wt, int[] val) {
@@ -317,4 +318,5 @@ public class Practise {
             return take || nottake;
         }
     }
+
 }
