@@ -318,5 +318,34 @@ public class Practise {
             return take || nottake;
         }
     }
+// COIN CHANGESECOND (518)
+class Coin{
+    public int Problem(int[]coins,int amount){
+        int n = coins.length;
+        int[][]dp = new int[n+1][amount+1];
+        for (int i = 0; i <=n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        return helper(coins,amount,n,dp);
+    }
+    public int helper(int[]coins,int amount,int index,int[][]dp){
+        if (amount==0) {
+            return 1;
 
+        }
+        if (index ==0) {
+            return 0;
+        }
+        if (dp[index][amount]!=-1) {
+            return dp[index][amount];
+        }
+        if (coins[index-1]<=amount) {
+            int take = helper(coins, amount-coins[index-1], index, dp);
+            int nottake = helper(coins, amount, index-1, dp);
+            return dp[index][amount] = take+nottake;
+        }else{
+            return dp[index][amount] = helper(coins, amount, index-1, dp);
+        }
+    }
+}
 }
