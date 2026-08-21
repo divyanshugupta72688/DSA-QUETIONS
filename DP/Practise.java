@@ -238,6 +238,140 @@ public class Practise {
         }
     }
 
+    // 0/1 KNAPSACK
 
-    
+    class Knapsack {
+        public int Problem(int w, int[] wt, int[] val) {
+            int n = wt.length;
+            int[][] dp = new int[n + 1][w + 1];
+            for (int i = 0; i <= n; i++) {
+                Arrays.fill(dp[i], -1);
+            }
+            return helper(w, wt, val, n, dp);
+        }
+
+        public int helper(int w, int[] wt, int[] val, int n, int[][] dp) {
+            if (n == 0 || w == 0) {
+                return 0;
+            }
+            if (dp[n][w] != -1) {
+                return dp[n][w];
+            }
+            if (wt[n - 1] <= w) {
+                int take = val[n - 1] + helper(w - wt[n - 1], wt, val, n - 1, dp);
+                int nottake = helper(w, wt, val, n - 1, dp);
+                return dp[n][w] = Math.max(take, nottake);
+            } else {
+                return dp[n][w] = helper(w, wt, val, n - 1, dp);
+            }
+        }
+    }
+
+    // UNBOUNDED KNAPSACK ME TAKE VALI LINE ME SIRF N-1 NAHI LETE HAI KYUKI THINGS
+    // CAN BE REPEAT
+
+    // TARGET SUM PARTIONING (416)
+
+    class parttioning {
+        public boolean Problem(int[] nums) {
+            int sum = 0;
+            for (int i = 0; i < nums.length; i++) {
+                sum += nums[i];
+            }
+            if ((sum % 2) != 0) {
+                return false;
+            }
+            int target = sum / 2;
+            int n = nums.length;
+            int[][] dp = new int[n + 1][target + 1];
+            for (int i = 0; i <= n; i++) {
+                Arrays.fill(dp[i], -1);
+            }
+            return helper(nums, dp, 0, target);
+        }
+
+        public boolean helper(int[] nums, int[][] dp, int index, int target) {
+            if (target == 0) {
+                return true;
+            }
+            if (index >= nums.length || target < 0) {
+                return false;
+            }
+            if (dp[index][target] != -1) {
+                return dp[index][target] == 1;
+            }
+            boolean take = helper(nums, dp, index + 1, target - nums[index]);
+            boolean nottake = helper(nums, dp, index + 1, target);
+            dp[index][target] = (take || nottake) ? 1 : 0;
+            return take || nottake;
+        }
+    }
+
+    // COIN CHANGE PROBLEM || (518)
+
+    class Coin {
+        public int Problem(int[] coins, int amount) {
+            int n = coins.length;
+            int[][] dp = new int[n + 1][amount + 1];
+            for (int i = 0; i <= n; i++) {
+                Arrays.fill(dp[i], -1);
+            }
+            return helper(coins, amount, dp, n);
+        }
+
+        private int helper(int[] coins, int amount, int[][] dp, int index) {
+            if (amount == 0) {
+                return 1;
+            }
+            if (index == 0) {
+                return 0;
+            }
+            if (dp[index][amount] != -1) {
+                return dp[index][amount];
+            }
+            if (coins[index - 1] <= amount) {
+                int take = helper(coins, amount - coins[index - 1], dp, index);
+                int nottake = helper(coins, amount, dp, index - 1);
+                return dp[index][amount] = take + nottake;
+            } else {
+                return dp[index][amount] = helper(coins, amount, dp, index - 1);
+            }
+        }
+    }
+
+    // COIN CHANGE |(398)
+
+    class CoinFirst {
+        public int Problem(int[] coins, int amount) {
+            int n = coins.length;
+            int[][] dp = new int[n + 1][amount + 1];
+            for (int i = 0; i <= n; i++) {
+                Arrays.fill(dp[i], -1);
+            }
+            int ans = helper(coins, amount, dp, n);
+            if (ans == Integer.MAX_VALUE - 1) {
+                return -1;
+            }
+            return ans;
+        }
+
+        private int helper(int[] coins, int amount, int[][] dp, int index) {
+            if (amount == 0) {
+                return 0;
+            }
+            if (index == 0) {
+                return Integer.MAX_VALUE - 1;
+            }
+            if (dp[index][amount] != -1) {
+                return dp[index][amount];
+            }
+            if (coins[index - 1] <= amount) {
+                int take = 1 + helper(coins, amount - coins[index - 1], dp, index);
+                int nottake = helper(coins, amount, dp, index - 1);
+                return dp[index][amount] = take + nottake;
+            } else {
+                return dp[index][amount] = helper(coins, amount, dp, index - 1);
+            }
+        }
+    }
 }
