@@ -126,7 +126,7 @@ class Robber{
             return dp[index];
         }
         int includeans = nums[index]+helper(nums, index+2, dp);
-        int excludeans = 0+ helper(nums, index+1, dp);
+        int excludeans = helper(nums, index+1, dp);
         dp[index] = Math.max(includeans, excludeans);
         return dp[index];
     }
