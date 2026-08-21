@@ -115,4 +115,129 @@ public class Practise {
             return dp[start] = Math.max(sit1, sit2);
         }
     }
+
+    // FRIENDS PAIRING PROBLEM
+
+    class Friends {
+        public int Pairing(int n) {
+            int[] dp = new int[n + 1];
+            Arrays.fill(dp, -1);
+            return helper(n, dp);
+        }
+
+        public int helper(int n, int[] dp) {
+            if (n <= 2) {
+                return n;
+            }
+            if (dp[n] != -1) {
+                return dp[n];
+            }
+            return dp[n] = helper(n - 1, dp) + (helper(n - 2, dp) * (n - 1));
+        }
+    }
+
+    // DEARRANGEMENT
+
+    class Dearrange {
+
+        public int Count(int n) {
+            int[] dp = new int[n + 1];
+            Arrays.fill(dp, -1);
+            return helper(n, dp);
+        }
+
+        public int helper(int n, int[] dp) {
+            if (n == 0) {
+                return 1;
+            }
+            if (n == 1) {
+                return 0;
+            }
+            if (dp[n] != -1) {
+                return dp[n];
+            }
+            return dp[n] = (n - 1) * (helper(n - 1, dp) + helper(n - 2, dp));
+        }
+    }
+
+    // UNIQUE PATH(62)
+
+    class Unique {
+        public int Path(int n, int m) {
+            int[][] dp = new int[m + 1][n + 1];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    dp[i][j] = -1;
+                }
+            }
+            return helper(0, 0, m, n, dp);
+        }
+
+        public int helper(int row, int coln, int m, int n, int[][] dp) {
+            if (row > m || coln > n) {
+                return 0;
+            }
+            if (row == m && coln == n) {
+                return 1;
+            }
+            if (dp[row][coln] != -1) {
+                return dp[row][coln];
+            }
+            return dp[row][coln] = helper(row + 1, coln, m, n, dp) + helper(row, coln + 1, m, n, dp);
+        }
+    }
+
+    // MINIMUM PATH SUM(64)
+
+    class Minimum {
+        public int PathSum(int[][] grid) {
+            int m = grid.length;
+            int n = grid[0].length;
+            int[][] dp = new int[m + 1][n + 1];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    dp[i][j] = -1;
+                }
+            }
+            return helper(0, 0, m, n, grid, dp);
+        }
+
+        private int helper(int row, int coln, int m, int n, int[][] grid, int[][] dp) {
+            if (row >= m || coln >= n) {
+                return Integer.MAX_VALUE;
+            }
+            if (row == m && coln == n) {
+                return grid[row][coln];
+            }
+            if (dp[row][coln] != -1) {
+                return dp[row][coln];
+            }
+            return dp[row][coln] = grid[row][coln]
+                    + Math.min(helper(row + 1, coln, m, n, grid, dp), helper(row, coln + 1, m, n, grid, dp));
+        }
+    }
+
+    // COUNT SQAURE (1277)
+
+    class Count {
+        public int Square(int[][] nums) {
+            int count = 0;
+            for (int i = 0; i < nums.length; i++) {
+                for (int j = 0; j < nums[0].length; j++) {
+                    if (nums[i][j] == 0) {
+                        continue;
+                    }
+                    if (i > 0 && j > 0) {
+                        nums[i][j] = nums[i][j]
+                                + Math.min(nums[i - 1][j - 1], Math.min(nums[i - 1][j], nums[i][j - 1]));
+                    }
+                    count += nums[i][j];
+                }
+            }
+            return count;
+        }
+    }
+
+
+    
 }
